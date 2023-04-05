@@ -1,0 +1,55 @@
+<div class="container-fluid">
+    <div class="row my-4 header-title">
+        <h4 class="px-4">Story List</h4>
+    </div>
+</div>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md 12 d-flex justify-content-between align-items-baseline">
+            <button mat-raised-button class="create-story-btn" (click)="navigateToStoryForm('create','')">Create Story <mat-icon>add</mat-icon></button>
+            <mat-form-field appearance="outline" class="search-story" >
+                <mat-label>Search Story</mat-label>
+                <input [readonly]="false" matInput (keyup)="applyFilter($event)" autocomplete="off" />
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md 12">
+            <div>
+                <table mat-table [dataSource]="storyListDataSource" matSort class="mat-elevation-z8 story-list-table">
+                    <ng-container matColumnDef="story_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by story_name">
+                            Story Name
+                        </th>
+                        <td mat-cell *matCellDef="let element"> {{element.story_name}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="story_point">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by story_point">
+                            Story Point
+                        </th>
+                        <td mat-cell *matCellDef="let element"> {{element.story_point}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+                            Action
+                        </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <div class="action-btns">
+                                <button mat-icon-button class="edit-btn" (click)="navigateToStoryForm('edit',element.id)"><mat-icon>edit</mat-icon></button>
+                                <button mat-icon-button class="delete-btn" (click)="deleteStory(element.id)"><mat-icon>delete</mat-icon></button>
+                            </div>
+                        </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="storyListDisplayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: storyListDisplayedColumns;"></tr>
+                </table>
+            </div>
+            <mat-paginator  [pageSize]="storyTablePagination.pageSize" [length]="storyTablePagination.Count" [pageIndex]="storyTablePagination.pageIndex" [pageSizeOptions]="storyTablePagination.pageSizeOptions" (page)="onPaginateChange($event)" showFirstLastButtons
+                aria-label="Select page of periodic elements" class="mat-paginator">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

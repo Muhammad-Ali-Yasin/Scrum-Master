@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="row my-4 header-title">
+        <h4 class="px-4">Sprint Calculator</h4>
+    </div>
+</div>
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12">
+            <mat-card class=" my-0 mx-auto w-50per">
+                <mat-card-content>
+                    <form [formGroup]="SprintForm" #SprintFormDirective="ngForm"
+                        (ngSubmit)="submitSprintForm(SprintFormDirective)">
+                        <div class="d-flex flex-wrap">
+                            <mat-form-field appearance="outline" class="sprint-form-field">
+                                <mat-label>Sprint Point</mat-label>
+                                <input type="number" matInput formControlName="sprint_point" [readonly]="isStorySelected ? true : false"
+                                    onKeyPress="if(this.value.length==10) return false; return event.charCode >= 48 && event.charCode <= 57 ">
+                                <mat-error>Sprint Point is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <mat-card-actions class="sprintform-card-actions">
+                            <div class="d-flex justify-content-around">
+                                <button type="submit" mat-raised-button [disabled]="isStorySelected">Auto Select Stories</button>
+                                <button type="button" mat-raised-button (click)="clearStories('selected')">Clear Selected Stories</button>
+                                <button type="button" mat-raised-button (click)="clearStories('all')">Clear Stories</button>
+                            </div>
+                        </mat-card-actions>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+            <button *ngIf="isStorySelected" type="button" mat-stroked-button class="mt-4 text-center d-block mx-auto" (click)="viewGeneratedSprint()">View Generated Sprint</button>
+        </div>
+    </div>
+</div>
